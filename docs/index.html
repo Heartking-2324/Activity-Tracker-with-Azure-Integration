@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Tracker Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6200ea;
+            --primary-dark: #3700b3;
+            --secondary: #03dac6;
+            --background: #f4f4f9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(98, 0, 234, 0.15);
+        }
+
+        .feature-item i {
+            font-size: 2.5em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover i {
+            transform: scale(1.1);
+        }
+
+        .hold-button {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(98, 0, 234, 0.3);
+        }
+
+        .hold-button::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--secondary);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hold-button.holding::after {
+            opacity: 1;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hold-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(98, 0, 234, 0.4);
+        }
+
+        .documentation-section {
+            background: linear-gradient(45deg, #f8f9fa, #e8eaf6);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .connect-section {
+            background: linear-gradient(45deg, #e8eaf6, #f8f9fa);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(98, 0, 234, 0.1);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-link:hover {
+            background: rgba(98, 0, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--primary-dark);
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hold-button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+</body>
+    <header>
+        <h1>Activity Tracker Dashboard</h1>
+        <p>Tracking System Insights with Azure Integration</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> About the Project</h2>
+                <p>
+                    <i class="fas fa-lightbulb" style="color: var(--primary); margin-right: 10px;"></i>
+                    The Activity Tracker Dashboard is an innovative solution designed to track user activities, monitor system performance, and analyze application usage in real time.
+                </p>
+                <p>
+                    <i class="fas fa-users" style="color: var(--primary); margin-right: 10px;"></i>
+                    This tool is ideal for organizations and individuals aiming to understand usage patterns, optimize performance, and detect anomalies proactively.
+                </p>
+                <p>
+                    <i class="fas fa-cloud" style="color: var(--primary); margin-right: 10px;"></i>
+                    By integrating with Azure's powerful cloud infrastructure, the Activity Tracker ensures scalability, security, and robust analytics.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section">
+                <h2><i class="fas fa-star"></i> Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-mouse"></i>
+                        <h3>Activity Tracking</h3>
+                        <p>Real-time monitoring of mouse movements and system usage patterns</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Azure Integration</h3>
+                        <p>Seamless cloud synchronization with Azure services</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Analytics</h3>
+                        <p>Advanced insights and performance metrics</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Security</h3>
+                        <p>Robust anomaly detection and tamper protection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section">
+                <h2><i class="fas fa-rocket"></i> Get Started</h2>
+                <div class="buttons" style="text-align: center;">
+                    <a href="#" class="hold-button" id="createButton">
+                        <i class="fas fa-code"></i> Create Your Own
+                    </a>
+                    <a href="https://github.com/YourGitHubRepo" class="hold-button" id="githubButton">
+                        <i class="fab fa-github"></i> GitHub Repository
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="documentation-section">
+            <h2><i class="fas fa-book"></i> Documentation</h2>
+            <p>Access comprehensive documentation and resources:</p>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>Project Report</h3>
+                    <a href="path/to/project-report.pdf" class="social-link">View Report</a>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-book"></i>
+                    <h3>README</h3>
+                    <a href="path/to/readme" class="social-link">View Guide</a>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-code"></i>
+                    <h3>API Docs</h3>
+                    <a href="path/to/api-docs" class="social-link">View API</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="connect-section">
+            <h2><i class="fas fa-handshake"></i> Let's Make This Better Together!</h2>
+            <p>Interested in collaborating or improving this project? I'm always open to new ideas and contributions!</p>
+            <p>Connect with me:</p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="mailto:sujhal05gurav@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i> sujhal05gurav@gmail.com
+                </a>
+                <a href="https://linkedin.com/in/your-profile" class="social-link">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Activity Tracker Team. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function handleHoldButton(button, targetUrl) {
+            let timer;
+            let isHolding = false;
+
+            button.addEventListener('mousedown', () => {
+                isHolding = true;
+                button.classList.add('holding');
+                timer = setTimeout(() => {
+                    if (isHolding) {
+                        window.location.href = targetUrl;
+                    }
+                }, 3000);
+            });
+
+            button.addEventListener('mouseup', () => {
+                isHolding = false;
+                button.classList.remove('holding');
+                clearTimeout(timer);
+            });
+
+            button.addEventListener('mouseleave', () => {
+                isHolding = false;
+                button.classList.remove('holding');
+                clearTimeout(timer);
+            });
+        }
+
+        // Initialize hold buttons
+        handleHoldButton(document.getElementById('createButton'), 'path/to/create-page');
+        handleHoldButton(document.getElementById('githubButton'), 'https://github.com/YourGitHubRepo');
+    </script>
+</body>
+</html>
